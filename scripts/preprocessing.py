@@ -26,15 +26,15 @@ def findUniqueMatrices(listOfMats):
   return uniquelist
 
 def RotFlipInvariants(lat, rot=True, flip=True):
-  """Generates rotational and flip invariants for a given matrix."""
+  """Generates invariants for a given polymer/surface sequence using a series of rotation and flip operations """
   invariants = []
   invariants.append(lat)
   rotMats = []
   flipMats = []
-  if(lat.ndim == 2 and lat.shape[0] == lat.shape[1]):
+  if(lat.ndim == 2 and lat.shape[0] == lat.shape[1]): # Applying rotation and flip operations for a 2D square surface matrix
     if(rot==True):
-      for i in range(1,3):
-        temp = np.rot90(lat, k=i)
+      for i in range(1,4):
+        temp = np.rot90(lat, k=i) # Perform three 90° counterclockwise rotations (90°, 180°, 270°)
         rotMats.append(temp)
     invariants.extend(rotMats)
     if(flip==True):
@@ -44,7 +44,7 @@ def RotFlipInvariants(lat, rot=True, flip=True):
         temp = np.flipud(matrix)
         flipMats.append(temp)
       invariants.extend(flipMats)
-  else:
+  elif lat.ndim==1: # Applying sequence reversal for a 1D polymer sequence
     invariants.append(lat[::-1])
   logging.info(f"Generated {len(findUniqueMatrices(invariants))} unique rotational/flip invariants.")
   return findUniqueMatrices(invariants)
@@ -55,7 +55,7 @@ def canonical_form(matrices):
     logging.info("Canonical form found.")
     return [canonical]
 
-def augment_surface(surface,polymer,pmf):
+def augment_surface(surface,polymer,pmf,rot=True: bool,flip=True: bool):
 
     surfacetemp, polymertemp, pmftemp = [], [], []
 
@@ -64,7 +64,7 @@ def augment_surface(surface,polymer,pmf):
         ysample = polymer[i,:]    # Extract 40-dimensional polymer sequence
         zsample = pmf[i,:]        # Extract 100-dimensional PMF
     
-        xsample = RotFlipInvariants(xsample, rot=True, flip=False) # Apply rotation and flip to surface
+        xsample = RotFlipInvariants(xsample, rot=rot, flip=flip) # Apply rotation and flip to surface
       # xsample = findCanonicalForm(xsample)  # Reduce to canonical form
     
         # Duplicate polymer and PMF data for all generated surface variations
@@ -88,7 +88,7 @@ def augment_polymer(surface,polymer,pmf):
         ysample = polymer[i,:]    # Get the 40-dimensional polymer sequence
         zsample = pmf[i,:]        # Get the 100-dimensional PMF
 
-        ysample = RotFlipInvariants(ysample, rot=True, flip=False)  # Apply transformations to polymer
+        ysample = RotFlipInvariants(ysample, rot=False, flip=False)  # Apply transformations to polymer
         # ysample = findCanonicalForm(ysample)  # Reduce to canonical form
 
        # Duplicate surface and PMF data for all generated polymer variations
