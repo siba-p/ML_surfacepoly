@@ -14,15 +14,17 @@ In molecular simulations, **PMF profiles**.  Instead of running computationally 
 
 To be added.....
 #scripts
-Run the script with different options to control the preprocessing steps:
+###Run the script with different options to control the preprocessing steps:
+```python
 python preprocess.py
-This script supports command-line flags to enable or disable specific preprocessing steps:
+###This script supports command-line flags to enable or disable specific preprocessing steps:
 python prepare_data.py
-
---reshape (Enable/disable data reshaping.)
---surface-augment (Enable/disable surface augmentation)
---polymer-augment (Enable/disable polymer augmentation)
-
+|  Flag           |  Options |  Default  |  Description                        |
+|-----------------|----------|-----------|-------------------------------------|
+|--reshape        |   Yes/No |     Yes   | Enable/disable data reshaping       |
+|--surface-augment|   Yes/No |     Yes   | Enable/disable surface augmentation |
+|--polymer-augment|   Yes/No |     Yes   | Enable/disable polymer augmentation |
+```
 ---
 
 ---
@@ -42,7 +44,7 @@ Install Dependencies
 
 pip install -r requirements.txt
 
-
+```
 
 
 Hyperparameters
