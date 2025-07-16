@@ -1,7 +1,7 @@
 # 🔬 Polymer-Surface PMF Prediction using *****
 
 This repository contains a machine learning model for predicting the **Potential of Mean Force (PMF) profiles** of polymer-surface interactions using enhanced sampling data from Umbrella Sampling (US). The input to the neural network consists of **one-hot encoded polymer-surface representations** along with fractional compositions.
-
+![Forward Model architecture](examples/ML_architec.png)
 ---
 
 ## 📌 **Project Overview**
