@@ -19,10 +19,9 @@ Our approach:
 <table>
 <tr>
 <td><img src="examples/R2_plot.png" alt="R2" width="300"></td>
-<td><img src="examples/pmf_animation.gif" alt="PMF animation" width="300"></td>
+<td><img src="examples/pmf.gif" alt="PMF animation" width="300"></td>
 </tr>
 </table>
-![R2](examples/R2_plot.png) ![PMF](examples/pmf_animation.gif)
 ## 📂 **Repository Structure**
 gen_scripts/ # Dataset generation scripts
 ising_generate.py # Generate binary surfaces,polymers by 2D, 1D Monte-carlo Ising model
