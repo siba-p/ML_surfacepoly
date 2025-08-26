@@ -16,7 +16,13 @@ Our approach:
 - Uses a **CNN–GRU–Attention hybrid model** to capture both **spatial heterogeneity** and **sequence dependence**.
 - Predicts **full PMF profiles** directly, enabling rapid screening of polymer–surface combinations.
 
-
+<table>
+<tr>
+<td><img src="example/R2_plot.png" alt="R2" width="300"></td>
+<td><img src="example/pmf_animation.gif" alt="PMF animation" width="300"></td>
+</tr>
+</table>
+![R2](example/R2_plot.png) ![PMF](example/pmf_animation.gif)
 ## 📂 **Repository Structure**
 gen_scripts/ # Dataset generation scripts
 ising_generate.py # Generate binary surfaces,polymers by 2D, 1D Monte-carlo Ising model
