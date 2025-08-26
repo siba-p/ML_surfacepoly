@@ -1,4 +1,6 @@
-# 🔬 Polymer-Surface PMF Prediction using *****
+# MD-informed Attention-based Hybrid Network for Predicting Polymer-Surface Adhesion
+
+*Attention-based hybrid neural network is developed to predict the polymer-surface binding free energy across diverse sequence, composition and patterns using synthetic dataset generated via MD simulations*
 
 This repository contains a machine learning model for predicting the **Potential of Mean Force (PMF) profiles** of polymer-surface interactions using enhanced sampling data from Umbrella Sampling (US). The input to the neural network consists of **one-hot encoded polymer-surface representations** along with fractional compositions.
 ![Forward Model architecture](examples/ML_architec.png)

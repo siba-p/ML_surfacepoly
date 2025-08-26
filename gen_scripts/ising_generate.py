@@ -1,27 +1,23 @@
 import numpy as np
-#%pip install numpy
-#%pip install matplotlib
-#%pip install tqdm
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib.animation import PillowWriter
 from tqdm import tqdm
 import seaborn as sns
-
-N1 = 8
-N2 = 5
+N1 = 20
+N2 = 20
 
 xpatchlevel = 2
 ypatchlevel = 2
 
-fracA = 1.0
+fracA = 0.2
 fracB = 1-fracA
 
 kB = 8.314
 T = 1
 ns = 0.4 #0.4 # J/kB*T
 
-tsteps = 100000
+tsteps = 1000000
 
 prob = [fracA, fracB]
 
@@ -92,7 +88,7 @@ def Moore(pos):
 def isSpinFlip(pos):
     x = pos[0]
     y = pos[1]
-    mod = 1000*(fracA*N1*N2 - (1-fracA)*N1*N2)/(N1*N2)
+    mod = 1000*(-1*fracA*N1*N2 + 1*(1-fracA)*N1*N2)/(N1*N2)
     dS = -2*lattice[x,y]
     nb = Neumann(pos)
     dN = np.sum(nb)
@@ -158,12 +154,9 @@ def fraction(lattice):
     f = float(countA/(countA+countB))
     print(countA, countB)
     return(f)
-###################################
-#####for surface only########
-##############################
-###############################
-#################################
-###################################
+################################
+#####for generating surface#####
+################################
 
 def genSurfaces(num):
     
@@ -192,20 +185,19 @@ def genSurfaces(num):
     return 0, temp_list
 
 
-#pframes = 10
-#ctr = 0
+pframes = 20
+ctr = 10
 #for i in range(pframes, pframes+1):
-#while(ctr < pframes):
-#    print("Surface "+str(ctr+1))
-#    state, tlist = genSurfaces(ctr)
-#    print(tlist)
-#    plt.plot(tlist)
-#    if(state == 1):
-#        print("Surface generation successful!")
-#        print(fraction(lattice))
-#        ctr = ctr + 1
-#    else:
-#        print("Surface generation failed! Trying again")
+while(ctr < pframes):
+    print("Surface "+str(ctr+1))
+    state, tlist = genSurfaces(ctr)
+    plt.plot(tlist)
+    if(state == 1):
+        print("Surface generation successful!")
+        print(fraction(lattice))
+        ctr = ctr + 1
+    else:
+        print("Surface generation failed! Trying again")
 
 ########################
 ####Visulaise the surface
@@ -222,13 +214,18 @@ def genSurfaces(num):
 #    axs[j, k].imshow(temp)
 #plt.savefig("surface.png")
 #plt.show()
+#fig, axes = plt.subplots(5,2, figsize = (15,25))
+#n = 10
+#for i in range(n):
+#    data = np.load("surface_"+str(i+1)+".npy")
+#    sns.heatmap(data, ax=axes[i//2,i%2],annot=True)
+#plt.savefig("surface_{fracA}.png")    
+#plt.show()
 
-###################################
-#####for polymer only########
+
 ##############################
-###############################
-#################################
-###################################
+#####for generating polymer###
+##############################
 def genPolymers(num):
     
     global lattice
@@ -247,44 +244,38 @@ def genPolymers(num):
     for t in tqdm(range(delt)):
         MCIsing()
         deg = np.sum(lattice)
-        tfracA = (-1*(deg/(N1*N2)) + 1)/2
+        tfracA = ((deg/(N1*N2)) + 1)/2
         temp_list.append(tfracA)
         if(t > 1000 and np.round(tfracA,4) == np.round(needfrac,4)):
             np.save("polymer_"+str(num+1)+".npy", lattice.flatten())
             return 1, temp_list
         #    break
     return 0, temp_list
-pframes = 100
-ctr = 90
-for i in range(pframes, pframes+1):
- while(ctr < pframes):
-    print("Polymer "+str(ctr+1))
-    state, tlist = genPolymers(ctr)
-    plt.plot(tlist)
-    if(state == 1):
-        print("Polymer generation successful!")
-        ctr = ctr + 1
-    else:
-        print("Polymer generation failed! Trying again")
+#plt.plot(temp_list) 
+#pframes = 10
+#ctr = 0
+#for i in range(pframes, pframes+1):
+#while(ctr < pframes):
+#    print("Polymer "+str(ctr+1))
+#    state, tlist = genPolymers(ctr)
+#    plt.plot(tlist)
+#    if(state == 1):
+#        print("Polymer generation successful!")
+#        ctr = ctr + 1
+#    else:
+#        print("Polymer generation failed! Trying again")
 
-#Visualisation polymer
+# Visualisation polymer
 
-fig, axs = plt.subplots(5, 2, figsize = (10,5))
-
+#fig, axs = plt.subplots(5, 2, figsize = (10,5))
+#
 #nSurf = 10
 
-#for i in range(10,20):
+#for i in range(nSurf):
 #    j = i%5
 #    k = int(i/5)
 #    temp = np.load("polymer_"+str(i+1)+".npy")
 ##    print(np.sum(temp))
 #    axs[j, k].imshow(np.expand_dims(temp, axis=0))
-#plt.savefig(f"polymer_{fracA}.png")
+#plt.savefig("polymer.png")
 #plt.show()
-fig, axes = plt.subplots(5,2, figsize = (30,15))
-n = 100
-for i in range(90,n):
-    data = np.load("polymer_"+str(i+1)+".npy")
-    sns.heatmap(data.reshape(1,-1), ax=axes[(i-90)//2,(i-90)%2],annot=True)
-plt.savefig(f"polymer_{fracA}.png")
-plt.show()
