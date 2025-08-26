@@ -12,7 +12,7 @@ Traditionally, **PMF profiles** are computed using **umbrella sampling (US)**, b
 Our approach:
 -**Generates polymer and surface configurations** using a **2D and 1D Monte Carlo Ising model** while preserving the overall **fractional composition**.  
   This ensures physical relevance and systematic coverage of the sequence–pattern design space.
-- Encodes **polymer sequences** and **surface patterns** (one-hot + fractional compositions).
+- Encodes **polymer sequences** and **surface patterns**
 - Uses a **CNN–GRU–Attention hybrid model** to capture both **spatial heterogeneity** and **sequence dependence**.
 - Predicts **full PMF profiles** directly, enabling rapid screening of polymer–surface combinations.
 
@@ -23,7 +23,7 @@ ising_generate.py # Generate binary surfaces,polymers by 2D, 1D Monte-carlo Isin
 constructSurface.py # Generate heterogeneous surfaces .gro files
 generatePolymer.py # Generate polymer sequences .gro files
 createSimBox.py # Build MD simulation box
-MD_inputfiles/ # Input files for MD simulations (umbrella sampling)
+MD_inputfiles/ # Input files for performing Gromacs MD simulations (umbrella sampling)
 
 models/ # Neural network architectures (CNN, GRU, Transformer)
 scripts/ # Data processing, analysis, utilities
@@ -64,10 +64,9 @@ pip install -r requirements.txt
 
 Hyperparameter tuning
 
-Modify config.yaml to fine-tune model settings:
 
 
-👨‍💻 Contributing
+‍💻 Contributing
 Interested in improving the model? 
 
 Open an issue
