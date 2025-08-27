@@ -18,8 +18,8 @@ Our approach:
 
 <table>
 <tr>
-<td><img src="examples/R2.png" alt="R2" width="300"></td>
-<td><img src="examples/pmf_animation.gif" alt="PMF animation" width="300"></td>
+<td><img src="examples/R2.png" alt="R2" width="100"></td>
+<td><img src="examples/pmf_animation.gif" alt="PMF animation" width="100"></td>
 </tr>
 </table>
 ## 📂 **Repository Structure**
