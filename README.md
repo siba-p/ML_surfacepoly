@@ -25,7 +25,7 @@ Our approach:
 </table>
 ## 📂 **Repository Structure**
 
-models/ # Neural network architectures (CNN, GRU, Transformer)
+models/ # Neural network architectures (CNN, GRU, Transformer)  
 scripts/ # Data processing, analysis, utilities
 
 #Additional scripts
@@ -62,14 +62,6 @@ pip install -r requirements.txt
 ```
 
 
-Hyperparameter tuning
-
-
-
-‍💻 Contributing
-Interested in improving the model? 
-
-Open an issue
-Submit a pull request
-Suggest enhancements
+Hyperparameter tuning:
+Initially a few hyperparameters are tuned through the script training_hp.py present in the folder ~models.
 
