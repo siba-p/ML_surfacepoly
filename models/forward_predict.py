@@ -144,11 +144,11 @@ def load_and_predict(checkpoint_path, input_data_path, output_path, target_data_
         print(f"Predictions saved to {output_path}")
 
     # Compute MAE if target available
-    if Y_true is not None:
+#    if Y_true is not None:
 #        metrics = evaluate_forward_model_performance(Y_true, predictions, plot_scatter=False,use_delf=True)
 #        print("Test MAE: {:.4f}, R²: {:.4f}".format(metrics['mae_test'], metrics['r2_test']))
-        mae = mean_absolute_error(Y_true.flatten(), predictions.flatten())
-        print(f"MAE: {mae:.4f}")
+#        mae = mean_absolute_error(Y_true.flatten(), predictions.flatten())
+#        print(f"MAE: {mae:.4f}")
 
     return predictions
 # ----------------------

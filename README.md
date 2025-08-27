@@ -59,9 +59,13 @@ Install Dependencies
 
 pip install -r requirements.txt
 
+python forward_predict.py \
+    --checkpoint_path models/checkpoint/HybridCNN/canonical_forward_model.keras \
+    --input_data data/processed/fdX_train.npy \
+    --output_data models/predictions.npy \
+    --target_data data/processed/fdY_train.npy \
+    --NN_type HybridCNN
 ```
-
-
 Hyperparameter tuning:
 Initially a few hyperparameters are tuned through the script training_hp.py present in the folder ~models.
 
