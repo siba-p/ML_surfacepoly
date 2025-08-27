@@ -18,9 +18,9 @@ Our approach:
 
 <table>
 <tr>
-<td><img src="examples/nps.png" alt="R2" width="200"></td>
+<td><img src="examples/nps.gif" alt="snapshot" width="200"></td>
 <td><img src="examples/pmf_animation.gif" alt="PMF animation" width="200"></td>
-<td><img src="examples/R2.png" alt="PMF animation" width="200"></td>
+<td><img src="examples/R2.png" alt="R2 plot" width="200"></td>
 </tr>
 </table>
 ## 📂 **Repository Structure**
