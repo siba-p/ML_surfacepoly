@@ -58,8 +58,9 @@ source env/bin/activate
 Install Dependencies
 
 pip install -r requirements.txt
-
-python forward_predict.py \
+```
+```python
+python -m forward_predict.py \
     --checkpoint_path models/checkpoint/HybridCNN/canonical_forward_model.keras \
     --input_data data/processed/fdX_train.npy \
     --output_data models/predictions.npy \
