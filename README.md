@@ -23,12 +23,6 @@ Our approach:
 </tr>
 </table>
 ## 📂 **Repository Structure**
-gen_scripts/ # Dataset generation scripts
-ising_generate.py # Generate binary surfaces,polymers by 2D, 1D Monte-carlo Ising model
-constructSurface.py # Generate heterogeneous surfaces .gro files
-generatePolymer.py # Generate polymer sequences .gro files
-createSimBox.py # Build MD simulation box
-MD_inputfiles/ # Input files for performing Gromacs MD simulations (umbrella sampling)
 
 models/ # Neural network architectures (CNN, GRU, Transformer)
 scripts/ # Data processing, analysis, utilities
