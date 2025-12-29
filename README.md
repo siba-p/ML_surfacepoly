@@ -3,7 +3,7 @@
 This repository contains a machine learning model for predicting the **Potential of Mean Force (PMF) profiles** of polymer-surface interactions using enhanced sampling data from Umbrella Sampling (US). The input to the neural network consists of **one-hot encoded polymer-surface representations** along with fractional compositions.
 
 
-![Forward Model architecture](ML_architec.png)
+![Forward Model architecture](figure_1.pdf)
 ---
 ## 📌 Project Overview
 Understanding polymer–surface adhesion is crucial for designing functional nanomaterials and therapeutic systems.  

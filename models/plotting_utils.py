@@ -89,8 +89,8 @@ def plot_training_history(history, skip=0):
 def set_clean_style(ax, major_ticks_x=10, minor_ticks_x=0.5,
                     major_ticks_y=10, minor_ticks_y=0.5,
                     minor_tick=False):
-    ax.tick_params(axis='both', direction='out', length=5, width=1, colors='black', pad=4, which='major')
-    ax.tick_params(axis='both', direction='out', length=3, width=1, colors='black', pad=8, which='minor')
+    ax.tick_params(axis='both', direction='in', length=5, width=1, colors='black', pad=4, which='major')
+    ax.tick_params(axis='both', direction='in', length=3, width=1, colors='black', pad=8, which='minor')
     
     ax.xaxis.set_major_locator(ticker.MultipleLocator(major_ticks_x))
     ax.yaxis.set_major_locator(ticker.MultipleLocator(major_ticks_y))
