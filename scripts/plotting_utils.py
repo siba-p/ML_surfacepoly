@@ -6,17 +6,18 @@ import matplotlib.ticker as ticker
 # ------------------------ Plotting Configuration ------------------------ #
 LARGE_SIZE = 14
 MEDIUM_SIZE = 12
-SMALL_SIZE = 10
+SMALL_SIZE = 6
 
 params = {
-    'font.family': 'serif',
-    'font.size': 8,
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],# Use serif fonts like Times New Roman
+    'font.size': 6,
     'font.weight': 'medium',
     'figure.figsize': (3.5, 2.5),
-    'axes.titlesize': LARGE_SIZE,
-    'axes.labelsize': MEDIUM_SIZE,
-    'xtick.labelsize': MEDIUM_SIZE,
-    'ytick.labelsize': MEDIUM_SIZE,
+    'axes.titlesize': 14,
+    'axes.labelsize': SMALL_SIZE,
+    'xtick.labelsize': SMALL_SIZE,
+    'ytick.labelsize': SMALL_SIZE,
     'axes.labelweight': 'medium',
     'legend.fontsize': SMALL_SIZE,
     'legend.frameon': True,
@@ -24,7 +25,7 @@ params = {
     'lines.linewidth': 1,
     'lines.markersize': 6,
     'grid.alpha': 0.5,
-    'savefig.dpi': 600,
+    'savefig.dpi': 400,
     'text.usetex': False,
     'axes.grid': False,
     'axes.grid.axis': 'both',
@@ -32,14 +33,15 @@ params = {
     'figure.autolayout': True,
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
-    'xtick.direction': 'in',
-    'ytick.direction': 'in',
-    'xtick.major.size': 5,
-    'xtick.minor.size': 3,
-    'ytick.major.size': 5,
-    'ytick.minor.size': 3,
+    'xtick.direction': 'out',
+    'ytick.direction': 'out',
+    'xtick.major.size': 1,
+    'xtick.minor.size': 1,
+    'ytick.major.size': 1,
+    'ytick.minor.size': 1,
 }
 plt.rcParams.update(params)
+plt.rcParams['pdf.fonttype'] = 42
 
 # ------------------------ Hex Color Visualizer ------------------------ #
 def visualize_hex(hex_code):
@@ -89,8 +91,8 @@ def plot_training_history(history, skip=0):
 def set_clean_style(ax, major_ticks_x=10, minor_ticks_x=0.5,
                     major_ticks_y=10, minor_ticks_y=0.5,
                     minor_tick=False):
-    ax.tick_params(axis='both', direction='out', length=5, width=1, colors='black', pad=4, which='major')
-    ax.tick_params(axis='both', direction='out', length=3, width=1, colors='black', pad=8, which='minor')
+    ax.tick_params(axis='both', direction='out', length=3, width=0.4, colors='black', pad=1, which='major')
+    ax.tick_params(axis='both', direction='out', length=3, width=0.4, colors='black', pad=8, which='minor')
     
     ax.xaxis.set_major_locator(ticker.MultipleLocator(major_ticks_x))
     ax.yaxis.set_major_locator(ticker.MultipleLocator(major_ticks_y))
@@ -100,9 +102,10 @@ def set_clean_style(ax, major_ticks_x=10, minor_ticks_x=0.5,
         ax.yaxis.set_minor_locator(ticker.MultipleLocator(minor_ticks_y))
 
     for label in ax.get_xticklabels() + ax.get_yticklabels():
-        label.set_fontsize(12)
+        label.set_fontsize(SMALL_SIZE)
         label.set_fontweight('medium')
 
     for spine in ax.spines.values():
-        spine.set_linewidth(0.8)
-
+        spine.set_linewidth(0.4)
+    ax.xaxis.labelpad = 2
+    ax.yaxis.labelpad = 2
