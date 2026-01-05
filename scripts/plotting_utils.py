@@ -40,10 +40,9 @@ params = {
     'ytick.major.size': 1,
     'ytick.minor.size': 1,
 }
-plt.rcParams.update(params)
 plt.rcParams['pdf.fonttype'] = 42
-
-# ------------------------ Hex Color Visualizer ------------------------ #
+def update_params():
+    plt.rcParams.update(params)
 def visualize_hex(hex_code):
     rgb = mcolors.to_rgb(hex_code)
     r, g, b = [round(x * 255) for x in rgb]
@@ -64,7 +63,6 @@ def visualize_hex(hex_code):
     ax.set_yticks([])
     plt.show()
 
-# ------------------------ Training History Plot ------------------------ #
 def plot_training_history(history, skip=0):
     history_dict = history.history
     metrics = [m for m in history_dict.keys() if not m.startswith('val_')]
@@ -87,7 +85,6 @@ def plot_training_history(history, skip=0):
         plt.grid(True)
         plt.show()
 
-# ------------------------ Clean Style Setter ------------------------ #
 def set_clean_style(ax, major_ticks_x=10, minor_ticks_x=0.5,
                     major_ticks_y=10, minor_ticks_y=0.5,
                     minor_tick=False):

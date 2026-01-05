@@ -1,7 +1,6 @@
 import numpy as np
 from prepare_model_data import prepare_model_data
 
-# Get all data splits
 (
     fdX_train, fdY_train, fdX_valid, fdY_valid, fdX_test, fdY_test,delF
 ) = prepare_model_data(neural_tag="canonical")

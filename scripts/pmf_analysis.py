@@ -101,8 +101,3 @@ def analyze_pmf_regions(pmf_data, window_size=3, tol_ratio=0.1):
         "min_index_value": min_index_value,
     }
 
-##results = analyze_pmf_regions(pmf_data)
-
-# Example access
-#print("Delta F shape:", results["delF"].shape)
-#print("Positive curvature:", results["positive_curvature"][0, 0])

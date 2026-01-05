@@ -5,12 +5,8 @@ import argparse
 from preprocessing import reshape_data, polymer_canononilize, surface_canononilize
 #from pmf_analysis import analyze_pmf_regions                            
 
-#parser = argparse.ArgumentParser(description="Preprocess dataset with optional augmentation steps.")
 logging.basicConfig(level=logging.INFO,format = "%(asctime)s - %(levelname)s - %(message)s")
 
-#parser.add_argument("--augment_surface")
-#parser.add_argument("--augment_polymer")
-#arg = parser.parse_args()
 
 def prepare_canonical_data():
     try:
@@ -47,5 +43,4 @@ def prepare_canonical_data():
     canonical_default_xdata = np.hstack((surface_canon.reshape(len(pmf_canon),20*20),polymer_canon)) 
     canonical_default_ydata = pmf_canon
     #results = analyze_pmf_regions(pmf_canon.reshape(91,91,100))
-    #print(results["delF"].shape)
     return canonical_default_xdata, canonical_default_ydata 

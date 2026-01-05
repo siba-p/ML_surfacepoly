@@ -1,0 +1,18 @@
+# ============================================================
+# ML-GO Pipeline Configuration
+# ============================================================
+
+python: python3
+
+surface:
+  fraction: 0.6
+  n_systems: 2
+
+polymer:
+  fraction: 0.6
+  n_systems: 2
+
+box:
+  surface_id: "001"
+  polymer_id: "001"
+
