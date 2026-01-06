@@ -1,4 +1,4 @@
-# Data-driven prediction of polymer surface adhesion using high-throughput MD and hybrid network models
+# Molecular Dynamics Guided Engineering of Polymer-Surface Adhesion Using Hybrid Network Models
 
 This repository contains a machine learning model for predicting the **Potential of Mean Force (PMF) profiles** of polymer-surface interactions using enhanced sampling data from Umbrella Sampling (US). The input to the neural network consists of **one-hot encoded polymer-surface representations** along with fractional compositions.
 
