@@ -1,0 +1,59 @@
+[ defaults ]
+; nbfunc  comb-rule gen-pairs fudgeLJ fudgeQQ
+  1		1   	yes	1 	1
+
+; @ a reduced temp of 120.272
+
+[ atomtypes ]
+;name  at.num  mass     charge   ptype       C6            C12
+;UCH	6	1	 0.00	  A	     4.0	    4.0		 ; sigma and epsilon taken to be 1.0 
+;PCH	6	1       +0.50	  A	     4.0	    4.0		 ; sigma and epsilon taken to be 1.0 
+;NCH	6	1       -0.50	  A	     4.0	    4.0		 ; sigma and epsilon taken to be 1.0 
+
+ACH	6	1       0.00	  A	     4.0	    4.0		 ; sigma and epsilon taken to be 1.0 
+BCH	6	1       0.00	  A	     4.0	    4.0		 ; sigma = 1.0 epsilon taken to be 1.0 
+ASH     6       1       0.00      A          4.0            4.0
+BSH     6       1       0.00      A          4.0            4.0
+KSH     6       1       0.00      A          4.0            4.0
+[ nonbond_params ]
+; i    j	func       C6        C12
+ACH	ASH      1         4.0      4.0     ; strong bead with polymer bead, eps = 1
+ACH     BSH      1         1.2      1.2      ;weak bead with polymer bead, eps = 0.3 
+BCH     ASH      1         1.2      1.2
+BCH     BSH      1         1.2      1.2
+ACH     BCH      1         1.2      1.2
+ASH     BSH      1         1.2      1.2
+;ACH     ACH      1         4.0      4.0
+ACH     ACH      1         2.8      2.8  ; ACH-ACH=intra chain=0.7
+BCH     BCH      1         1.2      1.2
+KSH     ASH      1         0.5      0.5
+KSH     BSH      1         0.5      0.5
+KSH     ACH      1         0.5      0.5
+KSH     BCH      1         0.5      0.5
+; X-------------------------------------------------------------------------------------X
+
+
+#include "polymer_1.itp"
+#include "../restraintx.itp"
+#include "../restrainty.itp"
+;#include "../restraintz.itp"
+;#include "restraint.itp"
+;#ifdef POLYPOSRES
+;#include "polyposres.itp"
+;#endif
+
+; X-------------------------------------------------------------------------------------X
+
+#include "../surface_1.itp"
+#include "../posresSurf.itp"
+
+; X-------------------------------------------------------------------------------------X
+
+[ system ]
+Kremer-Grest Polymer on Lennard-Jones Surface in water
+
+; X-------------------------------------------------------------------------------------X
+
+[ molecules ]
+LJQ	1
+KGP	1
