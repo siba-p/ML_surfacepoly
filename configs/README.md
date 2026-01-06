@@ -30,14 +30,14 @@ The Ising generator produces binary patterns (±1) representing:
     - Surface chemistry patterns (2D lattice)
     - Polymer sequences (1D chain)
   Surface generation 
-   ```bash
-   cd config
-   python ising_generator.py --mode surface --fraction 0.6 --n_systems 10 --out_dir topology/surface_fraction_0.6
-   ```
-   ```bash
-  Polymer generation 
-   python ising_generator.py --mode polymer --fraction 0.6 --n_systems 10 --out_dir topology/polymer_fraction_0.6
-   ```
+  ```bash
+  cd config
+  python ising_generator.py --mode surface --fraction 0.6 --n_systems 10 --out_dir topology/surface_fraction_0.6
+  ```
+  Polymer generation
+  ```bash
+  python ising_generator.py --mode polymer --fraction 0.6 --n_systems 10 --out_dir topology/polymer_fraction_0.6
+  ```
   Outputs are stored as .npy files inside the corresponding topology/ subdirectories.
 2. **Convert to GROMACS-input files.**
    ```bash
