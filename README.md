@@ -100,7 +100,7 @@ pip install -r requirements.txt
 
 All CLIs emit both checkpoints (`--checkpoint`) and serialized histories (`--history-out`) for reproducible.
 
-## Legacy Utilities
+## Utilities
 
 - The table in `scripts/README.md` documents each preprocessing helper; refer it when extending augmentation strategies.
 - Detailed dataset explanation is in `data/README.md` and how to generate `.npy`.
