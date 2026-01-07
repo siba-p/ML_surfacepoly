@@ -28,7 +28,7 @@ Backward and extended training expect explicit `.npy` files so you can plug in a
 
 ```bash
 python -m src.cli.train_backward \
-  --forward-checkpoint src/checkpoint/inverse/HybridCNN/canonical_forward_model.keras \
+  --forward-checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
   --train-seq data/splits/fdX_train.npy \
   --train-pmf data/splits/fdY_train.npy \
   --valid-seq data/splits/fdX_valid.npy \
@@ -39,7 +39,7 @@ For the tandem + extension pipeline provide the three tensors described in the n
 
 ```bash
 python -m src.cli.train_extended \
-  --forward-checkpoint src/checkpoint/inverse/HybridCNN/canonical_forward_model.keras \
+  --forward-checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
   --sequence-train data/splits/fdX_train.npy \
   --pmf-train data/splits/fdY_train.npy \
   --extra-train data/splits/bxX_train.npy \

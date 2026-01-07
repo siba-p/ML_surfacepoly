@@ -1,10 +1,10 @@
-M## Scripts Overview
+## Scripts Overview
 
 This folder hosts every utility needed to turn raw polymer/surface simulations into the tidy tensors consumed by the hybrid CNN forward model, plus diagnostics for understanding the PMF statistics.
 
 | Script | Purpose |
 | --- | --- |
-| `prepare_canonical_data.py` | Loads Monte Carlo–generated polymers/surfaces and PMF grids, returning canonical numpy arrays. |
+| `prepare_canonical_data.py` | Loads Monte Carlo–generated polymers/surfaces and PMF, returning canonical .npy arrays. |
 | `preprocessing.py` | Implements augmentation routines (surface/polymers flips, rotations, etc.) and helper transforms. |
 | `prepare_data.py` | Orchestrates canonical loading + augmentation controls (flags for reshape, polymer/surface augmentation). |
 | `pre_data.py` | Provides utilities for building compound inputs (e.g., concatenating ΔF with polymer descriptors) and split helpers. |

@@ -60,15 +60,15 @@ pip install -r requirements.txt
     --neural-tag canonical \
     --model hybrid \
     --epochs 2000 \
-    --checkpoint models/checkpoint/HybridCNN/canonical_forward_model.keras \
-    --history-out models/history/forward_canonical.npy
+    --checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
+    --history-out src/history/forward_canonical.npy
   ```
 
 3. **Train the backward model** :
 
   ```bash
   python -m src.cli.train_backward \
-    --forward-checkpoint models/checkpoint/HybridCNN/canonical_forward_model.keras \
+    --forward-checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
     --train-seq data/splits/fdX_train.npy \
     --train-pmf data/splits/fdY_train.npy \
     --valid-seq data/splits/fdX_valid.npy \
@@ -80,7 +80,7 @@ pip install -r requirements.txt
 
   ```bash
   python -m src.cli.train_extended \
-    --forward-checkpoint models/checkpoint/HybridCNN/canonical_forward_model.keras \
+    --forward-checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
     --sequence-train data/splits/fdX_train.npy \
     --pmf-train data/splits/fdY_train.npy \
     --extra-train data/splits/bxX_train.npy \
@@ -93,12 +93,12 @@ pip install -r requirements.txt
 
   ```bash
   python -m src.cli.predict_forward \
-    --checkpoint models/checkpoint/HybridCNN/canonical_forward_model.keras \
-    --inputs data/processed/fdX_test.npy \
-    --outputs models/predictions.npy
+    --checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
+    --inputs data/splits/fdX_test.npy \
+    --outputs src/predictions.npy
   ```
 
-All CLIs emit both checkpoints (`--checkpoint`) and serialized histories (`--history-out`) for reproducible.
+All CLIs uses both checkpoints (`--checkpoint`) and serialized histories (`--history-out`) for reproducible.
 
 ## Utilities
 
