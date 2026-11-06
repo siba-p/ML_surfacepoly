@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlsurfpoly"
+version = "1.0.0"
+description = "Machine learning for polymer-surface adhesion: forward PMF prediction and inverse design of patterned surfaces"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.10,<3.13"
+authors = [
+  { name = "Sibasankar Panigrahy" },
+  { name = "Alen James" },
+  { name = "Divya Nayar" },
+]
+dependencies = [
+  "numpy>=1.26,<2.1",
+  "scipy>=1.10",
+  "tensorflow>=2.18,<2.19",
+  "keras>=3.8,<3.9",
+  "tqdm>=4.66",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+notebooks = ["matplotlib>=3.7", "seaborn>=0.13", "scikit-learn>=1.3", "jupyterlab>=4.0"]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+mlsp-prepare-data = "mlsurfpoly.cli.prepare_data:main"
+mlsp-train-forward = "mlsurfpoly.cli.train_forward:main"
+mlsp-train-backward = "mlsurfpoly.cli.train_backward:main"
+mlsp-train-extended = "mlsurfpoly.cli.train_extended:main"
+mlsp-predict = "mlsurfpoly.cli.predict_forward:main"
+
+[tool.setuptools.packages.find]
+include = ["mlsurfpoly*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["tf: tests that need TensorFlow"]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["notebooks", "simulation"]
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["E501", "E741", "E402"]

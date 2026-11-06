@@ -1,107 +1,110 @@
-# Molecular Dynamics Guided Engineering of Polymer-Surface Adhesion Using Hybrid Network Models
+# ML_surfacepoly
 
-This repository contains a machine learning model for predicting the **Potential of Mean Force (PMF) profiles** of polymer-surface interactions using enhanced sampling data from Umbrella Sampling (US). The input to the neural network consists of **one-hot encoded polymer-surface representations** along with fractional compositions.
+Data and code for **"Prediction of Polymer Adhesion and Inverse Design of Heterogeneous Surfaces using Data-Driven Approaches"**
+(S. Panigrahy, A. James, D. Nayar; *Molecular Systems Design & Engineering*, submitted).
 
+A coarse-grained library of 92 polymer sequences and 92 chemically patterned surfaces was simulated with umbrella sampling,
+giving the potential of mean force (PMF) of every polymer-surface pair. This repository contains the simulation inputs and
+generators, the PMF dataset, and the models trained on it:
 
-![Forward Model architecture](examples/overview.png)
----
-## Overview
-Understanding polymer–surface adhesion is crucial for designing functional nanomaterials and therapeutic systems.  
-Traditionally, **PMF profiles** are computed using **umbrella sampling (US)**, but this is computationally expensive.  
+* **Forward model** (CNN + GRU + cross-attention): surface pattern and polymer sequence → full 100-point PMF.
+* **Extended tandem network** (backext → inverse network → frozen forward model): polymer sequence and target ΔF → surface pattern.
 
-Approach:
--**Generates polymer and surface configurations** using a **2D and 1D Monte Carlo Ising model** while preserving the overall **fractional composition**.  
-  This ensures physical relevance and systematic generation of the sequence–pattern design space.
-- Encodes **polymer sequences** and **surface patterns**
-- Uses a **CNN–GRU–Attention hybrid model** to capture both **spatial heterogeneity** and **sequence dependence**.
-- Predicts **full PMF profiles** directly, enabling rapid screening of polymer–surface combinations.
+![Workflow](docs/figures/overview.png)
 
 <table>
 <tr>
-<td><img src="examples/nps.gif" alt="snapshot" width="200"></td>
-<td><img src="examples/pmf_animation.gif" alt="PMF animation" width="200"></td>
-<td><img src="examples/R2.png" alt="R2 plot" width="200"></td>
+<td><img src="docs/figures/nps.gif" alt="polymer on a patterned surface" width="200"></td>
+<td><img src="docs/figures/pmf_animation.gif" alt="PMF animation" width="200"></td>
+<td><img src="docs/figures/R2.png" alt="predicted versus simulated binding free energy" width="200"></td>
 </tr>
 </table>
-## Repository Layout
 
-| `data/` | See `data/README.md`. |
-| `scripts/` 
-| `src/` | ML pipeline (see README.md for detailed explanation). |
-| `configs/` |  Files for MD system generation. |
-| `examples/`
+## Repository layout
+
+| Path | Contents |
+| --- | --- |
+| `mlsurfpoly/` | Python package: data pipeline (`data/`), models, losses, training loops, command-line tools (`cli/`). |
+| `data/` | `raw/` simulation output (PMFs, Monte Carlo sequences and patterns), `splits/` train/validation/test tensors, `interim/` unsplit library. See [docs/data.md](docs/data.md). |
+| `models/pretrained/` | Trained forward and inverse models used in the paper (`.keras`). |
+| `simulation/` | Generation of polymer and surface inputs (Ising Monte Carlo), GROMACS/PLUMED set-up, umbrella-sampling and WHAM scripts. See [simulation/README.md](simulation/README.md). |
+| `notebooks/` | `analysis_and_figures.ipynb`: statistics and plots of the dataset. |
+| `docs/` | [Data description](docs/data.md), [model architecture](docs/architecture.md), figures. |
+| `tests/` | Unit tests for the data pipeline and model construction. |
 
 ## Installation
+
+Python 3.10-3.12.
 
 ```bash
 git clone https://github.com/siba-p/ML_surfacepoly.git
 cd ML_surfacepoly
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+python -m venv .venv && source .venv/bin/activate
+pip install -e .                  # add ".[notebooks]" for the notebook, ".[dev]" for tests
 ```
 
-> Note: set `PYTHONPATH=$(pwd)` (or use `pip install -e .`) so `src/` modules resolve without any changes.
+The models were trained with TensorFlow 2.18 / Keras 3.8; `requirements.txt` lists these exact versions.
 
-## Workflow
+## Quick start
 
-1. **Generate datasets** :
+Predict the PMFs of the test pairs with the pretrained forward model:
 
-  ```bash
-  python -m scripts.save_data  # writes to data/splits/
-  ```
+```bash
+python -m mlsurfpoly.cli.predict_forward \
+  --checkpoint models/pretrained/forward/HybridCNN/canonical_forward_model.keras \
+  --inputs data/splits/fdX_test.npy
+```
 
-  The helper accepts the `neural_tag` argument inside `scripts/prepare_model_data.py` if you need `augmented` or `mixed` tensors.
+Input rows have 440 binary entries: the 20 × 20 surface pattern (400 values, row-major, 0 = strongly interacting site)
+followed by the 40-bead polymer sequence (0 = strongly interacting bead). Output rows are the 100-point PMF in k<sub>B</sub>T,
+referenced to 0 in the unbound state, on z<sub>cm</sub> = 4.73-10.37 σ.
 
-2. **Train the forward model** using CLI:
+## Reproducing the workflow
 
-  ```bash
-  python -m src.cli.train_forward \
-    --neural-tag canonical \
-    --model hybrid \
-    --epochs 2000 \
-    --checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
-    --history-out src/history/forward_canonical.npy
-  ```
+Every step has a `make` target (see `Makefile`) and an equivalent command-line tool.
 
-3. **Train the backward model** :
+1. **Build the splits** from the raw PMF library (70/20/10 % random split over pairs, seed 11):
 
-  ```bash
-  python -m src.cli.train_backward \
-    --forward-checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
-    --train-seq data/splits/fdX_train.npy \
-    --train-pmf data/splits/fdY_train.npy \
-    --valid-seq data/splits/fdX_valid.npy \
-    --valid-pmf data/splits/fdY_valid.npy \
-    --checkpoint models/checkpoint/HybridCNN/canonical_backward_model.keras
-  ```
+   ```bash
+   python -m mlsurfpoly.cli.prepare_data        # writes data/splits/
+   ```
 
-4. **Run the tandem + extension pipeline** for inverse design (requires the auxiliary `bxX_*` tensors described in the notebook):
+   This reproduces the shipped `data/splits/*.npy` exactly (checked by `tests/test_data.py`). Surfaces are reduced to a
+   canonical orientation over the 8 symmetries of the square array and polymers over chain reversal; the PMF is referenced to
+   the mean of its last 10 points. Use `--symmetry rot` or `--pmf-reference raw` for the alternatives.
 
-  ```bash
-  python -m src.cli.train_extended \
-    --forward-checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
-    --sequence-train data/splits/fdX_train.npy \
-    --pmf-train data/splits/fdY_train.npy \
-    --extra-train data/splits/bxX_train.npy \
-    --sequence-valid data/splits/fdX_valid.npy \
-    --pmf-valid data/splits/fdY_valid.npy \
-    --extra-valid data/splits/bxX_valid.npy
-  ```
+2. **Train the forward model**
 
-5. **Inference** on any encoded sequences:
+   ```bash
+   python -m mlsurfpoly.cli.train_forward --model hybrid --epochs 2000     # or --model dnn for the baseline
+   ```
 
-  ```bash
-  python -m src.cli.predict_forward \
-    --checkpoint src/checkpoint/forward/HybridCNN/canonical_forward_model.keras \
-    --inputs data/splits/fdX_test.npy \
-    --outputs src/predictions.npy
-  ```
+3. **Train the inverse design networks** (needs a trained forward model; the forward weights are frozen)
 
-All CLIs uses both checkpoints (`--checkpoint`) and serialized histories (`--history-out`) for reproducible.
+   ```bash
+   make train-backward      # inverse network on top of the forward model
+   make train-extended      # extended tandem network (backext + inverse + forward)
+   ```
 
-## Utilities
+4. **Run new simulations** (optional): generate polymers and surfaces, assemble boxes and run umbrella sampling as described
+   in [simulation/README.md](simulation/README.md).
 
-- The table in `scripts/README.md` documents each preprocessing helper; refer it when extending augmentation strategies.
-- Detailed dataset explanation is in `data/README.md` and how to generate `.npy`.
+Trained models and training histories are written to `models/runs/` (not tracked by git).
 
+## Scope and limitations
+
+* The dataset contains 91 × 91 = 8281 polymer-surface pairs used for learning (the all-weak polymer and the all-weak surface are
+  excluded). The train/validation/test split is random **over pairs**: every test polymer and every test surface also occurs in the
+  training set, combined with other partners. The reported accuracy therefore applies to new *combinations* of the polymers and
+  surfaces of this library, not to unseen sequences or patterns. `tests/test_data.py` documents this.
+* Surface sites lie on a hexagonal lattice. The 180° rotation of the 20 × 20 array maps the surface onto itself exactly; the other
+  rotations and reflections preserve only about 84 % and 68 % of the nearest-neighbour contacts and are approximate symmetries.
+* The model system is generic and coarse-grained (reduced Lennard-Jones units); see the paper for the mapping and the limitations.
+
+## Citation
+
+If you use this repository, please cite the article (see [CITATION.cff](CITATION.cff)).
+
+## License
+
+GNU General Public License v3.0, see [LICENSE](LICENSE).
