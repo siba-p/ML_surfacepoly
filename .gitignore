@@ -1,1 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
 
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Outputs of training runs and pipelines
+models/runs/
+simulation/pipeline.log
+*.log

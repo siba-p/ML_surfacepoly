@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the article below."
+title: "ML_surfacepoly: data and code for polymer adhesion prediction and inverse design of heterogeneous surfaces"
+type: software
+license: GPL-3.0-or-later
+repository-code: "https://github.com/siba-p/ML_surfacepoly"
+authors:
+  - family-names: Panigrahy
+    given-names: Sibasankar
+  - family-names: James
+    given-names: Alen
+  - family-names: Nayar
+    given-names: Divya
+    affiliation: "Department of Materials Science and Engineering, Indian Institute of Technology Delhi"
+preferred-citation:
+  type: article
+  title: "Prediction of Polymer Adhesion and Inverse Design of Heterogeneous Surfaces using Data-Driven Approaches"
+  authors:
+    - family-names: Panigrahy
+      given-names: Sibasankar
+    - family-names: James
+      given-names: Alen
+    - family-names: Nayar
+      given-names: Divya
+  journal: "Molecular Systems Design & Engineering"
+  status: submitted
