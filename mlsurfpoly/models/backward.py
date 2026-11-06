@@ -3,14 +3,13 @@ from __future__ import annotations
 
 import tensorflow as tf
 from tensorflow import keras
-from keras import regularizers
+from keras import Model, regularizers
 from keras.layers import (
     Dense,
     Dropout,
     Flatten,
     Input,
     LeakyReLU,
-    Model,
     Reshape,
     UpSampling2D,
     Conv2D,

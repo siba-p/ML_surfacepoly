@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import tensorflow as tf
 from tensorflow import keras
-from keras import regularizers
+from keras import Model, regularizers
 from keras.layers import (
     Add,
     Conv2D,
@@ -16,7 +16,6 @@ from keras.layers import (
     LayerNormalization,
     LeakyReLU,
     MaxPooling2D,
-    Model,
     MultiHeadAttention,
     Reshape,
 )
